@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-@Entity('migrated_content_english') // Maps to the updated table name
+@Entity('energy') // Maps to the updated table name
 export class Content {
   @PrimaryColumn({ type: 'char', length: 36 })
   //content_id!: string; // Primary key
@@ -37,7 +37,16 @@ export class Content {
   cont_dwurl?: string;
 
   @Column({ type: 'text', nullable: true })
+  type?: string;
+
+  @Column({ type: 'text', nullable: true })
   resource_desc?: string;
+
+  @Column({ type: 'text', nullable: true })
+  subjects?: string;
+
+  @Column({ type: 'text', nullable: true })
+  course_keywords?: string;
 
   @Column({ type: 'tinyint', default: 0 })
   migrated?: number; // Flag to track migration status
@@ -52,5 +61,11 @@ export class Content {
   convertedUrl?: string; // URL for converted files
 
   @Column({ type: 'varchar', length: 255, nullable: true })
+  cont_thumb?: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: true })
   old_system_content_id?: string;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  comment?: string;
 }

@@ -2,10 +2,20 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import express from 'express'; // ✅ Import express
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // 🚫 Disable Nest’s internal bodyParser
+  const app = await NestFactory.create(AppModule, {
+    bodyParser: false,
+    logger: ['log', 'error', 'warn', 'debug', 'verbose'],
+  });
+
   const configService = app.get(ConfigService);
+
+  // ✅ Manually set larger body size limits
+  app.use(express.json({ limit: '600mb' }));
+  app.use(express.urlencoded({ limit: '600mb', extended: true }));
 
   // Swagger setup
   const config = new DocumentBuilder()
@@ -21,4 +31,6 @@ async function bootstrap() {
   console.log(`Application is running on: http://localhost:${port}`);
   console.log(`Swagger is available at: http://localhost:${port}/api`);
 }
+
 bootstrap();
+

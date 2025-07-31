@@ -22,3 +22,10 @@ DB_NAME=
 
 #This is to support google drive links in content import 
 GOOGLE_DRIVE_API_KEY=
+
+
+
+env files
+env-qa
+env-prod
+env-coure-import

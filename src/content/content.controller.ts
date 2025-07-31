@@ -9,7 +9,13 @@ export class ContentController {
   constructor(private readonly contentService: ContentService) {}
 
   @Post('bulk-create')
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      limits: {
+        fileSize: 300 * 1024 * 1024, // ✅ Increased to 300MB
+      },
+    }),
+  )
   @ApiOperation({ summary: 'Bulk create content from CSV' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
